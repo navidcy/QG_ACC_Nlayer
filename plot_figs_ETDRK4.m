@@ -1,5 +1,5 @@
 
-plotU=1;
+plotU=0;
 plotb=0;
 
 np=round(Nx/24);
@@ -12,10 +12,8 @@ for in=1:Nz
 end
 
 
-% psih = tprod(invS,[1 2 3 -1],qh,[1 2 -1]);
-
-q = real(ifft2(qh)) +plotb*betaY;
-psi=real(ifft2(psih)) - plotU*UY;
+ q  = real(ifft2(  qh)) + plotb*betaY;
+psi = real(ifft2(psih)) - plotU*UY;
 
 u = real(ifft2(-1i*KY.*psih));
 v = real(ifft2(+1i*KX.*psih));
@@ -56,7 +54,7 @@ end
   
 figure(figNo)
 for in=1:Nz
-    subplot(2,Nz,in);
+    subplot(2,Nz,(in-1)*Nz+1);
     pcolor2(X/Ld,Y/Ld,q(:,:,in)/(Uscale/Ld));shading interp;
 %     contourf(Xf,Yf,qf(:,:,in),21,'linestyle','none');
     colorbar;
@@ -70,7 +68,7 @@ for in=1:Nz
     end
     set(gca,'Layer','top');box on;
     
-    subplot(2,Nz,Nz+in);
+    subplot(2,Nz,(in-1)*Nz+2);
     pcolor2(X/Ld,Y/Ld,psi(:,:,in));shading interp;
 %     contourf(Xf,Yf,psif(:,:,in),21,'linestyle','none');    
     hold on;
