@@ -2,7 +2,7 @@ clearvars -global;
 clearvars;
 
 global KX KY Uj ksq rek etah Hj H Nx Ny Nz topoflag greduced f0 taub forceqh rhoj invS betaj nu h beta
-global FILTERsmooth eta
+global FILTERsmooth eta rho
 
 cfllimit=0.8;
 figNo=10;
@@ -39,7 +39,7 @@ rhoj=[1025;1025.275]; %kg*m^(-3)
 % rhoj=1035;
 % rhoj=[1025;1025.275;1025.5;1026;1026.5;1027]; %kg*m^(-3)
 % rhoj=[1025;1028;1035]; %kg*m^(-3)
-rho = mean(rhoj(:));
+rho = sum(Hj.*rhoj)/H;
 Uj = [0.05;0.025;0.001]*1;
 Uj=0;
 
