@@ -54,7 +54,7 @@ end
   
 figure(figNo)
 for in=1:Nz
-    subplot(2,Nz,(in-1)*Nz+1);
+    subplot(Nz,2,(in-1)*2+1);
     pcolor2(X/Ld,Y/Ld,q(:,:,in)/(Uscale/Ld));shading interp;
 %     contourf(Xf,Yf,qf(:,:,in),21,'linestyle','none');
     colorbar;
@@ -68,7 +68,7 @@ for in=1:Nz
     end
     set(gca,'Layer','top');box on;
     
-    subplot(2,Nz,(in-1)*Nz+2);
+    subplot(Nz,2,(in-1)*2+2);
     pcolor2(X/Ld,Y/Ld,psi(:,:,in));shading interp;
 %     contourf(Xf,Yf,psif(:,:,in),21,'linestyle','none');    
     hold on;
