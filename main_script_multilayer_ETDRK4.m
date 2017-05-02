@@ -21,7 +21,7 @@ nu=1e9; h=2;
 
 rek = 1e-7;
 
-Nx=32; Ny=Nx; Nz=2;
+Nx=32; Ny=Nx; Nz=3;
 dx=Lx/Nx;dy=Ly/Ny;
 x=0:dx:Lx-dx;x=x+dx/2;
 y=0:dy:Ly-dy;y=y+dy/2;
@@ -29,12 +29,12 @@ y=0:dy:Ly-dy;y=y+dy/2;
 
 
 Hj=[500;1750;1750]; %m
-Hj=[500;1750]; %m
+% Hj=[500;1750]; %m
 % Hj=4000;
 % Hj=[500;600;600;600;1200;1200];
 H = sum(Hj(:));
 rhoj=[1025;1025.275;1025.640]; %kg*m^(-3)
-rhoj=[1025;1025.275]; %kg*m^(-3)
+% rhoj=[1025;1025.275]; %kg*m^(-3)
 % rhoj=1035;
 % rhoj=[1025;1025.275;1025.5;1026;1026.5;1027]; %kg*m^(-3)
 % rhoj=[1025;1028;1035]; %kg*m^(-3)
@@ -110,10 +110,8 @@ else
     kdef = sqrt(-Seigs(1));
 end
 
-Ld = 2*pi/kdef; %m
-disp(['deformation = ' num2str(Ld / 1e3,'%1.2f') ' km'])
-
-
+Ld = 1/kdef; %m
+disp(['Rossby radius of deformation, 1/k_1 = ' num2str(Ld / 1e3,'%1.2f') ' km'])
 
 
 kx=2*pi/Lx*[0:Nx/2-1 -Nx/2:-1];
