@@ -13,7 +13,6 @@ Lx=2*pi;Ly=2*pi;
 
 Lx=1e6; %m
 Ly=1e6; %m
-Ld = 15000; %m
 
 topoflag=1;
 figure(334);clf;
@@ -54,7 +53,7 @@ beta=1*1.2130692965249345e-11; % m^(-1)s^(-1)
 f0 = 0.0001236812857687059; % s^(-1)
 g = 9.81; % m*s^(-2)
 
-hrms=1500; % m
+hrms=500; % m
 etarms = hrms*f0/(Hj(Nz));
 
 
@@ -69,6 +68,7 @@ greduced = g*(rhoj(2:end)-rhoj(1:end-1))./rhoj(1:end-1); %definition to match PY
 % format long
 % greduced
 % format short
+
 
 
 
@@ -90,10 +90,28 @@ else
     betaj=beta;
 end
 
-%         
 % betaj2 = [beta                       - Fp(1)*(Uj(2)-Uj(1));
 %          beta - Fm(1)*(Uj(1)-Uj(2)) - Fp(2)*(Uj(3)-Uj(2));
 %          beta - Fm(2)*(Uj(2)-Uj(3))                       ];
+
+
+Smat = +diag(Fp,1) + diag(Fm,-1) - diag([Fp;0]+[0;Fm],0);
+
+Seigs = eig(Smat);
+[sd,ind]=sort(abs(Seigs));
+Seigs=Seigs(ind);
+
+Seigs=Seigs(2:end);
+% 2*pi./sqrt(-Seigs(1))/1e3
+
+if Nz==2
+    kdef = f0*sqrt(sum(Hj)./(greduced*Hj(1)*Hj(2)));
+else
+    kdef = sqrt(-Seigs(1));
+end
+
+Ld = 2*pi/kdef; %m
+disp(['deformation = ' num2str(Ld / 1e3,'%1.2f') ' km'])
 
 
 
