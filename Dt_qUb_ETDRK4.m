@@ -1,7 +1,6 @@
 function [nlin_q,nlin_U] = Dt_qUb_ETDRK4(qh,Ub)
 
-global FILTERsmooth
-global KX ksq rek Uj etah topoflag taub Hj H rhoj rho forceqh Nz invS betaj
+global KX ksq rek Uj etah taub Hj H rho F rekU aN forceqh Nz invS betaj 
 [Ny,Nx,Nz]=size(qh);
 
 psih = tprod(invS,[1 2 3 -1],qh,[1 2 -1]);
@@ -31,9 +30,19 @@ nlin_q(:,:,1) = nlin_q(:,:,1) + forceqh;
 % Ekman drag at bottom layer
 nlin_q(:,:,Nz) = nlin_q(:,:,Nz) - rek*(-ksq.*psih_N); 
 
-
+tic
 formstress = real(mean(conj(psih_N(:)).*(1i*KX(:).*etah(:)))) / (Nx*Ny);
-nlin_U = taub/(rhoj(1)*H) - Hj(Nz)/H * rek*Ub - Hj(Nz)/H * formstress;
+toc
+
+iKXetah = 1i*KX.*etah;
+tic
+formstress = real(mean(conj(psih_N(:)).*(iKXetah(:)))) / (Nx*Ny);
+toc
+
+nlin_U = F -rekU *Ub - aN * formstress;
+
+% nlin_U = taub/(rho*H) - Hj(Nz)/H * rek*Ub - Hj(Nz)/H * formstress;
+
 
 % for in=1:Nz
 %    nlin_q(:,:,in)=nlin_q(:,:,in).*FILTERsmooth;
