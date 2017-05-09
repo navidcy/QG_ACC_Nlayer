@@ -105,7 +105,7 @@ for in=1:Nz
 end
 
 figure(figNo+1)
-plot((1:it)*dt/year,Hj(Nz)/H * formstress(1:it)/(taub/(rho*H)),(1:it)*dt/year,rek*Ubt(1:it)/(taub/(rho*H)),'linewidth',2);
+plot((1:it)*dt/year,Hj(Nz)/H * formstress(1:it)/(taub/(rho*H)),(1:it)*dt/year,Hj(Nz)/H*rek*Ubt(1:it)/(taub/(rho*H)),'linewidth',2);
 hold on;plot([1 it]*dt/year,[1 1],'--k',[1 it]*dt/year,[0 0],'--k','linewidth',1);hold off;
 h=legend(['$$\frac{\langle\psi_' num2str(Nz) '\eta_x\rangle}{\langle\tau\rangle/(\varrho H)}$$'],'$$\frac{\mu\,U_b}{\langle\tau\rangle/(\varrho H)}$$');
 set(h,'Orientation','horizontal','interpreter','latex','fontsize',14);
